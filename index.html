@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAIRA Widget — Dev Test</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.6;
+      color: #1f2937;
+    }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+    p { margin-bottom: 1rem; }
+    .card {
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 1rem;
+    }
+    .animate-box {
+      width: 80px;
+      height: 80px;
+      background: #3b82f6;
+      border-radius: 8px;
+      animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .marquee-demo {
+      background: #e5e7eb;
+      padding: 8px 16px;
+      border-radius: 6px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-demo span {
+      display: inline-block;
+      animation: scroll 4s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>KAIRA Widget — Dev Test</h1>
+  <p>This page serves as a local playground for the accessibility widget. The floating button should appear at the bottom-right corner.</p>
+
+  <h2>Regular content</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+  <h2>Animated elements</h2>
+  <div class="card">
+    <p><strong>Bouncing box:</strong></p>
+    <div class="animate-box"></div>
+  </div>
+  <div class="card">
+    <p><strong>Marquee-like text:</strong></p>
+    <div class="marquee-demo"><span>This text scrolls continuously — toggle "Pausar Animaciones" to stop it.</span></div>
+  </div>
+
+  <h2>Images</h2>
+  <div class="card">
+    <img src="https://placehold.co/600x200/1a1a2e/ffffff?text=Sample+Image" alt="Sample placeholder image" style="max-width:100%;border-radius:6px;" />
+  </div>
+
+  <h2>Long text section</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum auctor est nec urna tincidunt, at venenatis nisi suscipit. Proin euismod, purus vel tincidunt ultrices, nunc nunc ultricies nunc, vitae aliquam nisl nunc vitae nunc. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+  <!-- Load built widget -->
+  <script src="dist/kaira.js"></script>
+</body>
+</html>
