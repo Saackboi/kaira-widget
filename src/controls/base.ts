@@ -1,6 +1,4 @@
-// -----------------------------------------------------------------------------
-// Control interface, registry, and registration function for widget controls.
-// -----------------------------------------------------------------------------
+// Control interface and registry. Each control file self-registers on import.
 
 export type ControlSection = 'vision' | 'reading' | 'navigation';
 

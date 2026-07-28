@@ -1,10 +1,8 @@
-// -----------------------------------------------------------------------------
-// Super focus mode — dims the page and creates a spotlight on the focused
-// element so the user can track keyboard navigation.
-// -----------------------------------------------------------------------------
+// Dims the page with a spotlight on the focused element for keyboard navigation.
 
 import { PREFIX, el } from '../state';
 import { register } from './base';
+import { LANG } from '../lang';
 
 const OVERLAY_ID = `${PREFIX}-focus-overlay`;
 
@@ -35,7 +33,7 @@ function updateSpotlight(overlay: HTMLElement): void {
 
 register({
   id: 'superFocus',
-  label: 'Super Focus',
+  label: LANG.controls.superFocus,
   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>',
   section: 'navigation',
   type: 'toggle',

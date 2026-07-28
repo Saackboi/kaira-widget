@@ -1,5 +1,8 @@
+// Text sizing control with + / - buttons and 4 levels [16, 18, 20, 22]px.
+
 import { TEXT_SIZE_LEVELS, pref, el, savePrefs } from '../state';
 import { register } from './base';
+import { LANG } from '../lang';
 
 export function applyTextSize(level: number): void {
   if (level === 0) {
@@ -23,12 +26,12 @@ function changeTextSize(delta: number): void {
 function syncUI(): void {
   if (!el.textSizeDisplay) return;
   el.textSizeDisplay.textContent =
-    pref.textSize > 0 ? `${pref.textSize}/${TEXT_SIZE_LEVELS.length - 1}` : 'OFF';
+    pref.textSize > 0 ? `${pref.textSize}/${TEXT_SIZE_LEVELS.length - 1}` : 'Off';
 }
 
 register({
   id: 'textSize',
-  label: 'Agrandar Texto',
+  label: LANG.controls.textSize,
   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>',
   section: 'reading',
   type: 'toggle',
@@ -47,7 +50,7 @@ register({
     iconSpan.innerHTML = this.icon;
     labelWrap.appendChild(iconSpan);
     const textSpan = document.createElement('span');
-    textSpan.textContent = this.label;
+    textSpan.textContent = LANG.controls.textSize;
     labelWrap.appendChild(textSpan);
 
     const controls = document.createElement('div');
@@ -55,7 +58,7 @@ register({
 
     const minusBtn = document.createElement('button');
     minusBtn.textContent = '\u2212';
-    minusBtn.setAttribute('aria-label', 'Reducir texto');
+    minusBtn.setAttribute('aria-label', LANG.textSizeDecrease);
     const btnBaseStyle = [
       'width:30px;height:30px;border-radius:6px;border:1px solid #d1d5db;',
       'background:#fff;cursor:pointer;font-size:16px;font-weight:600;',
@@ -69,7 +72,7 @@ register({
 
     const plusBtn = document.createElement('button');
     plusBtn.textContent = '+';
-    plusBtn.setAttribute('aria-label', 'Agrandar texto');
+    plusBtn.setAttribute('aria-label', LANG.textSizeIncrease);
     plusBtn.style.cssText = btnBaseStyle;
 
     minusBtn.addEventListener('click', () => changeTextSize(-1));
