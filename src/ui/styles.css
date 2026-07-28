@@ -1,0 +1,456 @@
+/* ====================================
+   KAIRA widget — all UI styles.
+   Injected into shadow root at runtime.
+   Changing the look → this file only.
+   ==================================== */
+
+/* ── Reset & Antialiasing ── */
+:host, #kaira-container * {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Focus Outline for Accessibility ── */
+#kaira-container button:focus-visible,
+#kaira-container select:focus-visible {
+  outline: 2px solid #8b7355;
+  outline-offset: 2px;
+}
+
+/* ── Container ── */
+#kaira-container {
+  position: fixed;
+  bottom: 80px;
+  right: 0;
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* ── Floating button ── */
+#kaira-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px 4px 4px 16px;
+  background: #ffffff;
+  color: #8b7355;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(139, 115, 85, 0.16), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+#kaira-btn:hover {
+  transform: scale(1.06);
+  border-color: rgba(139, 115, 85, 0.35);
+  box-shadow: 0 8px 24px rgba(139, 115, 85, 0.24), 0 2px 6px rgba(0, 0, 0, 0.1);
+  color: #705b42;
+}
+
+#kaira-btn.is-hidden {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Panel Container ── */
+#kaira-panel {
+  position: absolute;
+  bottom: 0;
+  right: 4px;
+  width: clamp(320px, 35vw, 480px);
+  max-height: min(80vh, 600px);
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform-origin: bottom right;
+  transform: scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
+}
+
+#kaira-panel.kaira-panel--open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Custom Scrollbar ── */
+#kaira-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+#kaira-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#kaira-panel::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.14);
+  border-radius: 4px;
+}
+
+#kaira-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ── Panel header ── */
+.kw-hdr {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  z-index: 2;
+}
+
+.kw-hdr-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.kw-logo {
+  width: auto;
+  height: 26px;
+  flex-shrink: 0;
+  display: block;
+  margin-right: 8px;
+}
+
+.kw-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.kw-lang {
+  margin: 0 10px 0 auto;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 3px 8px;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.kw-lang:hover {
+  border-color: #8b7355;
+  color: #111827;
+  background: #fafaf9;
+}
+
+.kw-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 20px;
+  color: #6b7280;
+  padding: 0;
+  line-height: 1;
+  margin-left: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.kw-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #111827;
+}
+
+.kw-body {
+  padding: 6px 0 12px;
+}
+
+/* ── Sections ── */
+.kw-section {
+  margin-top: 6px;
+}
+
+.kw-section-hdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px 6px;
+}
+
+.kw-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}
+
+.kw-section-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 4px 20px;
+}
+
+/* ── Control tiles ── */
+.kw-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 6px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  min-width: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.kw-tile:hover {
+  background: #fafaf9;
+  border-color: rgba(139, 115, 85, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.kw-tile.is-on {
+  border-color: #8b7355;
+  background: #f7f5f0;
+  box-shadow: 0 2px 8px rgba(139, 115, 85, 0.12);
+}
+
+.kw-tile.is-on:hover {
+  background: #efece4;
+  border-color: #705b42;
+}
+
+.kw-tile-icon {
+  display: flex;
+  color: #374151;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.kw-tile.is-on .kw-tile-icon {
+  color: #8b7355;
+}
+
+.kw-tile-lbl {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #1f2937;
+  text-align: center;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.kw-tile-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #6b7280;
+  background: #f3f4f6;
+  transition: all 0.15s ease;
+}
+
+.kw-tile-badge.is-on {
+  background: #8b7355;
+  color: #ffffff;
+}
+
+/* ── Profiles ── */
+.kw-prof-hdr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px 8px;
+}
+
+.kw-prof-hdr-icon {
+  display: flex;
+  color: #6b7280;
+}
+
+.kw-prof-hdr-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}
+
+.kw-prof-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 4px 20px 12px;
+}
+
+.kw-prof-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.kw-prof-tile:hover {
+  background: #fafaf9;
+  border-color: rgba(139, 115, 85, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.kw-prof-tile.is-on {
+  border-color: #8b7355;
+  background: #f7f5f0;
+  box-shadow: 0 2px 8px rgba(139, 115, 85, 0.12);
+}
+
+.kw-prof-tile.is-on:hover {
+  background: #efece4;
+  border-color: #705b42;
+}
+
+.kw-prof-icon {
+  display: flex;
+  color: #374151;
+  transition: color 0.15s ease;
+}
+
+.kw-prof-tile.is-on .kw-prof-icon {
+  color: #8b7355;
+}
+
+.kw-prof-lbl {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1f2937;
+  letter-spacing: -0.01em;
+}
+
+.kw-prof-desc {
+  font-size: 11px;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ── Reset all button ── */
+.kw-reset {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 4px 20px 12px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.kw-reset:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.1);
+}
+
+/* ── Text size row ── */
+.kw-tsize {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.kw-tsize-lbl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.kw-tsize-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #374151;
+}
+
+.kw-tsize-ctl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kw-tsize-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.kw-tsize-btn:hover {
+  background: #fafaf9;
+  border-color: #8b7355;
+  color: #111827;
+}
+
+.kw-tsize-disp {
+  min-width: 36px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+}

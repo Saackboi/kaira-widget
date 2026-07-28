@@ -1,14 +1,18 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 
+function getWidgetRoot(): ShadowRoot | null {
+  const host = document.getElementById('kaira-host');
+  return host?.shadowRoot ?? null;
+}
+
 beforeAll(async () => {
-  const existing = document.getElementById('kaira-container');
+  const existing = document.getElementById('kaira-host');
   if (existing) existing.remove();
   document.documentElement.classList.remove(
     'kaira-contrast', 'kaira-paused', 'kaira-spacing',
     'kaira-monochrome', 'kaira-dark-contrast', 'kaira-saturation-low',
     'kaira-saturation-high', 'kaira-highlight-links', 'kaira-highlight-titles',
   );
-  document.documentElement.classList.remove('kaira-spacing', 'kaira-text-size-1', 'kaira-text-size-2', 'kaira-text-size-3');
   localStorage.clear();
 
   await import('../src/index.ts');
@@ -16,24 +20,26 @@ beforeAll(async () => {
 });
 
 describe('KAIRA Widget', () => {
-  it('injects the container into the DOM', () => {
-    const container = document.getElementById('kaira-container');
+  it('injects the container into the shadow DOM', () => {
+    const root = getWidgetRoot();
+    expect(root).not.toBeNull();
+    const container = root!.getElementById('kaira-container');
     expect(container).not.toBeNull();
-    expect(container!.style.position).toBe('fixed');
-    expect(container!.style.zIndex).toBe('999999');
   });
 
   it('creates the floating button with correct label', () => {
-    const btn = document.getElementById('kaira-btn');
+    const root = getWidgetRoot()!;
+    const btn = root.getElementById('kaira-btn') as HTMLButtonElement;
     expect(btn).not.toBeNull();
-    expect(btn!.getAttribute('aria-label')).toBe('Accessibility options');
-    expect(btn!.getAttribute('aria-expanded')).toBe('false');
+    expect(btn.getAttribute('aria-label')).toBe('Accessibility options');
+    expect(btn.getAttribute('aria-expanded')).toBe('false');
   });
 
   it('creates the panel with controls', () => {
-    const panel = document.getElementById('kaira-panel');
+    const root = getWidgetRoot()!;
+    const panel = root.getElementById('kaira-panel') as HTMLDivElement;
     expect(panel).not.toBeNull();
-    expect(panel!.getAttribute('role')).toBe('dialog');
+    expect(panel.getAttribute('role')).toBe('dialog');
   });
 
   it('does not create a duplicate widget on re-init', async () => {
@@ -42,13 +48,14 @@ describe('KAIRA Widget', () => {
     await import(/* @vite-ignore */ url.pathname + url.search);
     await new Promise((r) => setImmediate(r));
 
-    const containers = document.querySelectorAll('#kaira-container');
-    expect(containers.length).toBe(1);
+    const hosts = document.querySelectorAll('#kaira-host');
+    expect(hosts.length).toBe(1);
   });
 
   it('toggles the panel open/close on button click', () => {
-    const btn = document.getElementById('kaira-btn') as HTMLButtonElement;
-    const panel = document.getElementById('kaira-panel') as HTMLDivElement;
+    const root = getWidgetRoot()!;
+    const btn = root.getElementById('kaira-btn') as HTMLButtonElement;
+    const panel = root.getElementById('kaira-panel') as HTMLDivElement;
 
     expect(panel.classList.contains('kaira-panel--open')).toBe(false);
 
@@ -62,7 +69,8 @@ describe('KAIRA Widget', () => {
 
 describe('Profiles', () => {
   it('renders profile tiles', () => {
-    const panel = document.getElementById('kaira-panel') as HTMLDivElement;
+    const root = getWidgetRoot()!;
+    const panel = root.getElementById('kaira-panel') as HTMLDivElement;
     expect(panel.textContent).toContain('Profiles');
     expect(panel.textContent).toContain('Seizure');
     expect(panel.textContent).toContain('Low Vision');
@@ -71,21 +79,24 @@ describe('Profiles', () => {
   });
 
   it('renders reset all button', () => {
-    const panel = document.getElementById('kaira-panel') as HTMLDivElement;
+    const root = getWidgetRoot()!;
+    const panel = root.getElementById('kaira-panel') as HTMLDivElement;
     expect(panel.textContent).toContain('Reset All');
   });
 });
 
 describe('Sections', () => {
   it('renders all three section headers', () => {
-    const panel = document.getElementById('kaira-panel') as HTMLDivElement;
+    const root = getWidgetRoot()!;
+    const panel = root.getElementById('kaira-panel') as HTMLDivElement;
     expect(panel.textContent).toContain('Vision');
     expect(panel.textContent).toContain('Reading');
     expect(panel.textContent).toContain('Navigation');
   });
 
   it('renders all control tiles', () => {
-    const panel = document.getElementById('kaira-panel') as HTMLDivElement;
+    const root = getWidgetRoot()!;
+    const panel = root.getElementById('kaira-panel') as HTMLDivElement;
     const labels = [
       'High Contrast', 'Enlarge Text', 'Spacing', 'Reading Guide',
       'Pause Animations', 'Large Cursor', 'Monochrome',

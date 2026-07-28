@@ -28,21 +28,16 @@ export interface Prefs {
   lang: string;
 }
 
-export interface ToggleRefs {
-  row: HTMLElement;
-  slider: HTMLElement;
-  dot: HTMLElement;
-}
-
 // Cache of DOM element references so controls don't query the DOM repeatedly.
 export interface ElementCache {
   container: HTMLDivElement | null;
   btn: HTMLButtonElement | null;
   panel: HTMLDivElement | null;
   panelBody: HTMLDivElement | null;
+  panelTitle: HTMLSpanElement | null;
+  closeBtn: HTMLButtonElement | null;
   guide: HTMLDivElement | null;
   textSizeDisplay: HTMLSpanElement | null;
-  toggles: Record<string, ToggleRefs>;
   guideHandler: ((e: MouseEvent) => void) | null;
   focusOverlay: HTMLDivElement | null;
   focusHandler: ((e: FocusEvent) => void) | null;
@@ -75,9 +70,10 @@ export const el: ElementCache = {
   btn: null,
   panel: null,
   panelBody: null,
+  panelTitle: null,
+  closeBtn: null,
   guide: null,
   textSizeDisplay: null,
-  toggles: {},
   guideHandler: null,
   focusOverlay: null,
   focusHandler: null,
@@ -124,7 +120,3 @@ export function loadPrefs(): void {
   }
 }
 
-export function applySliderVisual(slider: HTMLElement, dot: HTMLElement, checked: boolean): void {
-  slider.style.background = checked ? '#1a1a2e' : '#d1d5db';
-  dot.style.transform = checked ? 'translateX(18px)' : 'translateX(0)';
-}

@@ -30,7 +30,6 @@ import './controls/profiles';
 
   function rebuildPanelBody(): void {
     el.panelBody!.innerHTML = '';
-    el.toggles = {};
     const profilesSection = buildProfilesSection();
     if (profilesSection) el.panelBody!.appendChild(profilesSection);
     const sections: Array<'vision' | 'reading' | 'navigation'> = ['vision', 'reading', 'navigation'];
@@ -38,6 +37,7 @@ import './controls/profiles';
       const sectionEl = buildSection(section);
       if (sectionEl) el.panelBody!.appendChild(sectionEl);
     }
+
     syncTileStates();
   }
 
@@ -47,11 +47,14 @@ import './controls/profiles';
     pref.lang = code;
     savePrefs();
     if (el.btn) el.btn.setAttribute('aria-label', LANG.btnAriaLabel);
+    if (el.panel) el.panel.setAttribute('aria-label', LANG.panelAriaLabel);
+    if (el.panelTitle) el.panelTitle.textContent = LANG.panelTitle;
+    if (el.closeBtn) el.closeBtn.setAttribute('aria-label', LANG.closeBtnAriaLabel);
     rebuildPanelBody();
   }
 
   function init(): void {
-    if (document.getElementById('kaira-container')) return;
+    if (document.getElementById('kaira-host')) return;
 
     loadPrefs();
 
@@ -59,16 +62,22 @@ import './controls/profiles';
     const initialLang = pref.lang || (navigator.language.startsWith('es') ? 'es' : 'en');
     if (initialLang !== 'en') setLang(initialLang);
 
+    // Shadow DOM isolates widget from host site CSS (e.g. Reddit aggressive resets).
+    const host = document.createElement('div');
+    host.id = 'kaira-host';
+    document.body.appendChild(host);
+    const root = host.attachShadow({ mode: 'open' });
+
     el.container = buildContainer(SITE_KEY);
     el.panel = buildPanel(initialLang, handleLangChange);
     el.container.appendChild(el.panel);
 
     rebuildPanelBody();
-    injectStyles();
+    injectStyles(root);
 
     el.btn = buildButton();
     el.container.appendChild(el.btn);
-    document.body.appendChild(el.container);
+    root.appendChild(el.container);
 
     // Re-apply any previously saved preferences.
     for (const control of registry) {
