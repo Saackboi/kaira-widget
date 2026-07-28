@@ -1,22 +1,20 @@
-// Collects all CSS from base styles and control-level rules into one <style> tag.
-
-import { PREFIX } from './state';
 import { registry } from './controls/base';
+import widgetCSS from './ui/styles.css?raw';
 
-export function injectStyles(): void {
+export function injectStyles(root: ShadowRoot): void {
+  if (document.getElementById('kaira-styles-global')) return;
+
+  const font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = 'https://fonts.googleapis.com/css2?family=Cinzel:wght@900&display=swap';
+  document.head.appendChild(font);
+
   const style = document.createElement('style');
-  style.textContent = [
-    `#${PREFIX}-panel { display:none; }`,
-    `#${PREFIX}-panel.${PREFIX}-panel--open {`,
-    '  display:block;',
-    `  animation:${PREFIX}SlideUp 0.25s ease;`,
-    '}',
-    `@keyframes ${PREFIX}SlideUp {`,
-    '  from { opacity:0; transform:translateY(8px); }',
-    '  to   { opacity:1; transform:translateY(0); }',
-    '}',
-    '',
-    ...registry.filter((c) => c.css).map((c) => c.css!),
-  ].join('\n');
-  document.head.appendChild(style);
+  style.textContent = widgetCSS;
+  root.appendChild(style);
+
+  const global = document.createElement('style');
+  global.id = 'kaira-styles-global';
+  global.textContent = registry.filter((c) => c.css).map((c) => c.css!).join('\n');
+  document.head.appendChild(global);
 }

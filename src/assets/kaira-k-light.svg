@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@900&amp;display=swap');
+    </style>
+    <linearGradient id="gradLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="30%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#8b7355"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="#fafaf8" rx="12"/>
+  <text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Cinzel, serif" font-weight="900" font-size="140"
+        fill="url(#gradLight)">K</text>
+</svg>

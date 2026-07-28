@@ -3,13 +3,13 @@
 import { TEXT_SIZE_LEVELS, pref, el, savePrefs } from '../state';
 import { register } from './base';
 import { LANG } from '../lang';
+import { textSizeHTML } from '../ui/templates';
 
 export function applyTextSize(level: number): void {
   if (level === 0) {
     document.documentElement.style.removeProperty('font-size');
   } else {
-    const size = TEXT_SIZE_LEVELS[level] ?? 16;
-    document.documentElement.style.fontSize = `${size}px`;
+    document.documentElement.style.fontSize = `${TEXT_SIZE_LEVELS[level] ?? 16}px`;
   }
 }
 
@@ -37,55 +37,24 @@ register({
   type: 'toggle',
   apply(_on: boolean | string) { /* text-size uses custom UI, not this toggle */ },
   buildUI() {
+    const display = pref.textSize > 0 ? `${pref.textSize}/${TEXT_SIZE_LEVELS.length - 1}` : 'Off';
+    const html = textSizeHTML(
+      this.icon,
+      LANG.controls.textSize,
+      LANG.textSizeDecrease,
+      LANG.textSizeIncrease,
+      display,
+    );
     const row = document.createElement('div');
-    row.style.cssText = [
-      'display:flex;align-items:center;justify-content:space-between;',
-      'padding:10px 16px;',
-    ].join('');
+    row.innerHTML = html;
 
-    const labelWrap = document.createElement('span');
-    labelWrap.style.cssText = 'display:flex;align-items:center;gap:10px;font-size:14px;color:#374151;';
-    const iconSpan = document.createElement('span');
-    iconSpan.style.cssText = 'width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#374151;';
-    iconSpan.innerHTML = this.icon;
-    labelWrap.appendChild(iconSpan);
-    const textSpan = document.createElement('span');
-    textSpan.textContent = LANG.controls.textSize;
-    labelWrap.appendChild(textSpan);
+    const minus = row.querySelector('.kw-tsize-btn:first-child') as HTMLButtonElement;
+    const plus = row.querySelector('.kw-tsize-btn:last-child') as HTMLButtonElement;
+    el.textSizeDisplay = row.querySelector('.kw-tsize-disp') as HTMLSpanElement;
 
-    const controls = document.createElement('div');
-    controls.style.cssText = 'display:flex;align-items:center;gap:6px;';
+    minus.addEventListener('click', () => changeTextSize(-1));
+    plus.addEventListener('click', () => changeTextSize(1));
 
-    const minusBtn = document.createElement('button');
-    minusBtn.textContent = '\u2212';
-    minusBtn.setAttribute('aria-label', LANG.textSizeDecrease);
-    const btnBaseStyle = [
-      'width:30px;height:30px;border-radius:6px;border:1px solid #d1d5db;',
-      'background:#fff;cursor:pointer;font-size:16px;font-weight:600;',
-      'display:flex;align-items:center;justify-content:center;color:#374151;',
-    ].join('');
-    minusBtn.style.cssText = btnBaseStyle;
-
-    const display = document.createElement('span');
-    display.style.cssText = 'min-width:36px;text-align:center;font-size:13px;font-weight:500;color:#6b7280;';
-    el.textSizeDisplay = display;
-
-    const plusBtn = document.createElement('button');
-    plusBtn.textContent = '+';
-    plusBtn.setAttribute('aria-label', LANG.textSizeIncrease);
-    plusBtn.style.cssText = btnBaseStyle;
-
-    minusBtn.addEventListener('click', () => changeTextSize(-1));
-    plusBtn.addEventListener('click', () => changeTextSize(1));
-
-    controls.appendChild(minusBtn);
-    controls.appendChild(display);
-    controls.appendChild(plusBtn);
-
-    row.appendChild(labelWrap);
-    row.appendChild(controls);
-
-    syncUI();
-    return row;
+    return row.firstElementChild as HTMLElement;
   },
 });
