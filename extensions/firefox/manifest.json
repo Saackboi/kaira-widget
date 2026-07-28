@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "KAIRA Accessibility Widget",
+  "version": "1.0",
+  "description": "Floating accessibility toolbar — adjust contrast, font size, spacing, and more on any website",
+  "icons": {
+    "48": "icon.png"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["kaira.js"],
+    "run_at": "document_end"
+  }],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "kaira-widget@kaira.io"
+    }
+  }
+}
