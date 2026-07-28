@@ -1,20 +1,44 @@
 /* ====================================
    KAIRA widget — all UI styles.
-   Injected into shadow root at runtime.
-   Changing the look → this file only.
+   Colors use CSS custom properties for
+   white-label customization via
+   data-site-key → backend theme.
    ==================================== */
 
-/* ── Reset & Antialiasing ── */
-:host, #kaira-container * {
+/* ── Default theme (overridable via host.style.setProperty) ── */
+#kaira-container {
+  --kw-accent: #8b7355;
+  --kw-accent-dark: #705b42;
+  --kw-accent-rgb: 139, 115, 85;
+  --kw-bg: #ffffff;
+  --kw-title: #111827;
+  --kw-text: #1f2937;
+  --kw-text-secondary: #4b5563;
+  --kw-icon: #374151;
+  --kw-subtle: #6b7280;
+  --kw-border: #e5e7eb;
+  --kw-border-strong: #d1d5db;
+  --kw-hover-bg: #fafaf9;
+  --kw-on-bg: #f7f5f0;
+  --kw-on-hover-bg: #efece4;
+  --kw-muted-bg: #f3f4f6;
+  --kw-danger-bg: #fef2f2;
+  --kw-danger-border: #fecaca;
+  --kw-danger-hover: #fee2e2;
+  --kw-danger-text: #dc2626;
+}
+
+/* ── Reset ── */
+#kaira-container * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Focus Outline for Accessibility ── */
+/* ── Focus outline ── */
 #kaira-container button:focus-visible,
 #kaira-container select:focus-visible {
-  outline: 2px solid #8b7355;
+  outline: 2px solid var(--kw-accent);
   outline-offset: 2px;
 }
 
@@ -32,13 +56,13 @@
   width: 50px;
   height: 50px;
   border-radius: 16px 4px 4px 16px;
-  background: #ffffff;
-  color: #8b7355;
+  background: var(--kw-bg);
+  color: var(--kw-accent);
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 4px 16px rgba(139, 115, 85, 0.16), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(var(--kw-accent-rgb), 0.16), 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
   margin-left: auto;
   cursor: pointer;
@@ -46,9 +70,9 @@
 
 #kaira-btn:hover {
   transform: scale(1.06);
-  border-color: rgba(139, 115, 85, 0.35);
-  box-shadow: 0 8px 24px rgba(139, 115, 85, 0.24), 0 2px 6px rgba(0, 0, 0, 0.1);
-  color: #705b42;
+  border-color: rgba(var(--kw-accent-rgb), 0.35);
+  box-shadow: 0 8px 24px rgba(var(--kw-accent-rgb), 0.24), 0 2px 6px rgba(0, 0, 0, 0.1);
+  color: var(--kw-accent-dark);
 }
 
 #kaira-btn.is-hidden {
@@ -57,7 +81,7 @@
   pointer-events: none;
 }
 
-/* ── Panel Container ── */
+/* ── Panel ── */
 #kaira-panel {
   position: absolute;
   bottom: 0;
@@ -85,23 +109,11 @@
   pointer-events: auto;
 }
 
-/* ── Custom Scrollbar ── */
-#kaira-panel::-webkit-scrollbar {
-  width: 6px;
-}
-
-#kaira-panel::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-#kaira-panel::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.14);
-  border-radius: 4px;
-}
-
-#kaira-panel::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
-}
+/* ── Scrollbar ── */
+#kaira-panel::-webkit-scrollbar { width: 6px; }
+#kaira-panel::-webkit-scrollbar-track { background: transparent; }
+#kaira-panel::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.14); border-radius: 4px; }
+#kaira-panel::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.25); }
 
 /* ── Panel header ── */
 .kw-hdr {
@@ -117,10 +129,7 @@
   z-index: 2;
 }
 
-.kw-hdr-wrap {
-  display: flex;
-  align-items: center;
-}
+.kw-hdr-wrap { display: flex; align-items: center; }
 
 .kw-logo {
   width: auto;
@@ -133,7 +142,7 @@
 .kw-title {
   font-size: 16px;
   font-weight: 600;
-  color: #111827;
+  color: var(--kw-title);
   letter-spacing: -0.01em;
 }
 
@@ -141,20 +150,20 @@
   margin: 0 10px 0 auto;
   font-size: 12px;
   font-weight: 500;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--kw-border);
   border-radius: 6px;
   padding: 3px 8px;
-  background: #ffffff;
-  color: #374151;
+  background: var(--kw-bg);
+  color: var(--kw-icon);
   cursor: pointer;
   font-family: inherit;
   transition: all 0.15s ease;
 }
 
 .kw-lang:hover {
-  border-color: #8b7355;
-  color: #111827;
-  background: #fafaf9;
+  border-color: var(--kw-accent);
+  color: var(--kw-title);
+  background: var(--kw-hover-bg);
 }
 
 .kw-close {
@@ -165,7 +174,7 @@
   justify-content: center;
   border-radius: 50%;
   font-size: 20px;
-  color: #6b7280;
+  color: var(--kw-subtle);
   padding: 0;
   line-height: 1;
   margin-left: 4px;
@@ -177,17 +186,13 @@
 
 .kw-close:hover {
   background: rgba(0, 0, 0, 0.06);
-  color: #111827;
+  color: var(--kw-title);
 }
 
-.kw-body {
-  padding: 6px 0 12px;
-}
+.kw-body { padding: 6px 0 12px; }
 
 /* ── Sections ── */
-.kw-section {
-  margin-top: 6px;
-}
+.kw-section { margin-top: 6px; }
 
 .kw-section-hdr {
   display: flex;
@@ -199,7 +204,7 @@
 .kw-section-title {
   font-size: 11px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--kw-subtle);
   text-transform: uppercase;
   letter-spacing: 0.75px;
 }
@@ -219,8 +224,8 @@
   gap: 5px;
   padding: 12px 6px;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
+  border: 1px solid var(--kw-border);
+  background: var(--kw-bg);
   cursor: pointer;
   font: inherit;
   min-width: 0;
@@ -229,26 +234,26 @@
 }
 
 .kw-tile:hover {
-  background: #fafaf9;
-  border-color: rgba(139, 115, 85, 0.35);
+  background: var(--kw-hover-bg);
+  border-color: rgba(var(--kw-accent-rgb), 0.35);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .kw-tile.is-on {
-  border-color: #8b7355;
-  background: #f7f5f0;
-  box-shadow: 0 2px 8px rgba(139, 115, 85, 0.12);
+  border-color: var(--kw-accent);
+  background: var(--kw-on-bg);
+  box-shadow: 0 2px 8px rgba(var(--kw-accent-rgb), 0.12);
 }
 
 .kw-tile.is-on:hover {
-  background: #efece4;
-  border-color: #705b42;
+  background: var(--kw-on-hover-bg);
+  border-color: var(--kw-accent-dark);
 }
 
 .kw-tile-icon {
   display: flex;
-  color: #374151;
+  color: var(--kw-icon);
   width: 20px;
   height: 20px;
   align-items: center;
@@ -256,14 +261,12 @@
   transition: color 0.15s ease;
 }
 
-.kw-tile.is-on .kw-tile-icon {
-  color: #8b7355;
-}
+.kw-tile.is-on .kw-tile-icon { color: var(--kw-accent); }
 
 .kw-tile-lbl {
   font-size: 11.5px;
   font-weight: 500;
-  color: #1f2937;
+  color: var(--kw-text);
   text-align: center;
   line-height: 1.25;
   letter-spacing: -0.01em;
@@ -274,13 +277,13 @@
   font-weight: 600;
   padding: 1px 6px;
   border-radius: 4px;
-  color: #6b7280;
-  background: #f3f4f6;
+  color: var(--kw-subtle);
+  background: var(--kw-muted-bg);
   transition: all 0.15s ease;
 }
 
 .kw-tile-badge.is-on {
-  background: #8b7355;
+  background: var(--kw-accent);
   color: #ffffff;
 }
 
@@ -292,15 +295,12 @@
   padding: 12px 20px 8px;
 }
 
-.kw-prof-hdr-icon {
-  display: flex;
-  color: #6b7280;
-}
+.kw-prof-hdr-icon { display: flex; color: var(--kw-subtle); }
 
 .kw-prof-hdr-title {
   font-size: 11px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--kw-subtle);
   text-transform: uppercase;
   letter-spacing: 0.75px;
 }
@@ -319,8 +319,8 @@
   gap: 4px;
   padding: 12px 10px;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
+  border: 1px solid var(--kw-border);
+  background: var(--kw-bg);
   cursor: pointer;
   font: inherit;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -328,43 +328,36 @@
 }
 
 .kw-prof-tile:hover {
-  background: #fafaf9;
-  border-color: rgba(139, 115, 85, 0.35);
+  background: var(--kw-hover-bg);
+  border-color: rgba(var(--kw-accent-rgb), 0.35);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .kw-prof-tile.is-on {
-  border-color: #8b7355;
-  background: #f7f5f0;
-  box-shadow: 0 2px 8px rgba(139, 115, 85, 0.12);
+  border-color: var(--kw-accent);
+  background: var(--kw-on-bg);
+  box-shadow: 0 2px 8px rgba(var(--kw-accent-rgb), 0.12);
 }
 
 .kw-prof-tile.is-on:hover {
-  background: #efece4;
-  border-color: #705b42;
+  background: var(--kw-on-hover-bg);
+  border-color: var(--kw-accent-dark);
 }
 
-.kw-prof-icon {
-  display: flex;
-  color: #374151;
-  transition: color 0.15s ease;
-}
-
-.kw-prof-tile.is-on .kw-prof-icon {
-  color: #8b7355;
-}
+.kw-prof-icon { display: flex; color: var(--kw-icon); transition: color 0.15s ease; }
+.kw-prof-tile.is-on .kw-prof-icon { color: var(--kw-accent); }
 
 .kw-prof-lbl {
   font-size: 12.5px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--kw-text);
   letter-spacing: -0.01em;
 }
 
 .kw-prof-desc {
   font-size: 11px;
-  color: #6b7280;
+  color: var(--kw-subtle);
   text-align: center;
   line-height: 1.3;
 }
@@ -376,9 +369,9 @@
   margin: 4px 20px 12px;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #fecaca;
-  background: #fef2f2;
-  color: #dc2626;
+  border: 1px solid var(--kw-danger-border);
+  background: var(--kw-danger-bg);
+  color: var(--kw-danger-text);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -386,7 +379,7 @@
 }
 
 .kw-reset:hover {
-  background: #fee2e2;
+  background: var(--kw-danger-hover);
   border-color: #fca5a5;
   transform: translateY(-1px);
   box-shadow: 0 2px 6px rgba(220, 38, 38, 0.1);
@@ -406,7 +399,7 @@
   gap: 10px;
   font-size: 13.5px;
   font-weight: 500;
-  color: #374151;
+  color: var(--kw-icon);
 }
 
 .kw-tsize-icon {
@@ -416,35 +409,31 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #374151;
+  color: var(--kw-icon);
 }
 
-.kw-tsize-ctl {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+.kw-tsize-ctl { display: flex; align-items: center; gap: 6px; }
 
 .kw-tsize-btn {
   width: 30px;
   height: 30px;
   border-radius: 6px;
-  border: 1px solid #d1d5db;
-  background: #ffffff;
+  border: 1px solid var(--kw-border-strong);
+  background: var(--kw-bg);
   font-size: 16px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #374151;
+  color: var(--kw-icon);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .kw-tsize-btn:hover {
-  background: #fafaf9;
-  border-color: #8b7355;
-  color: #111827;
+  background: var(--kw-hover-bg);
+  border-color: var(--kw-accent);
+  color: var(--kw-title);
 }
 
 .kw-tsize-disp {
@@ -452,5 +441,5 @@
   text-align: center;
   font-size: 13px;
   font-weight: 600;
-  color: #4b5563;
+  color: var(--kw-text-secondary);
 }
