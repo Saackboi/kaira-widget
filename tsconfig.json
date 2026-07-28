@@ -6,10 +6,6 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "declaration": true,
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "sourceMap": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },

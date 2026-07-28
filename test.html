@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAIRA Widget Test</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.6;
+      color: #1f2937;
+    }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+    p { margin-bottom: 1rem; }
+    .card {
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 1rem;
+    }
+    .animate-box {
+      width: 80px;
+      height: 80px;
+      background: #3b82f6;
+      border-radius: 8px;
+      animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .marquee {
+      background: #e5e7eb;
+      padding: 8px 16px;
+      border-radius: 6px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee span {
+      display: inline-block;
+      animation: scroll 4s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .long-text {
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .long-text p { margin-bottom: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <h1>KAIRA Widget — Test</h1>
+  <p>Click the accessibility button at the bottom-right corner.</p>
+
+  <h2>Content</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+
+  <h2>Animated</h2>
+  <div class="card">
+    <p><strong>Bouncing box:</strong></p>
+    <div class="animate-box"></div>
+  </div>
+  <div class="card">
+    <p><strong>Marquee:</strong></p>
+    <div class="marquee"><span>Scrolling text — use "Pause Animations" to stop it.</span></div>
+  </div>
+
+  <h2>Images</h2>
+  <div class="card">
+    <img src="https://placehold.co/600x200/1a1a2e/ffffff?text=Sample+Image" alt="Sample placeholder image" style="max-width:100%;border-radius:6px;" />
+    <p style="margin-top:8px;font-size:14px;color:#6b7280;">Hover the image to see its description.</p>
+  </div>
+
+  <h2>Links</h2>
+  <p><a href="#">Example link one</a> — <a href="#">Another link</a></p>
+
+  <h2>Long text</h2>
+  <div class="long-text">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum auctor est nec urna tincidunt, at venenatis nisi suscipit. Proin euismod, purus vel tincidunt ultrices, nunc nunc ultricies nunc, vitae aliquam nisl nunc vitae nunc.</p>
+    <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+  </div>
+
+  <script src="dist/kaira.js"></script>
+</body>
+</html>
