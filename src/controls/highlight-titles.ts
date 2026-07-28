@@ -1,13 +1,12 @@
-// -----------------------------------------------------------------------------
-// Visually emphasizes headings to improve content navigation.
-// -----------------------------------------------------------------------------
+// Adds background color and outline to all h1-h6 headings.
 
 import { PREFIX } from '../state';
 import { register } from './base';
+import { LANG } from '../lang';
 
 register({
   id: 'highlightTitles',
-  label: 'Resaltar Títulos',
+  label: LANG.controls.highlightTitles,
   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v16"/><path d="M18 4v16"/><path d="M4 20h16"/><path d="M4 4h16"/></svg>',
   section: 'navigation',
   type: 'toggle',

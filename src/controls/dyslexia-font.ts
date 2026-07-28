@@ -1,9 +1,8 @@
-// -----------------------------------------------------------------------------
-// Dyslexia-friendly font toggle — loads OpenDyslexic and applies it.
-// -----------------------------------------------------------------------------
+// Loads and applies OpenDyslexic font, excluding icon/symbol font families.
 
 import { PREFIX } from '../state';
 import { register } from './base';
+import { LANG } from '../lang';
 
 const STYLE_ID = `${PREFIX}-dyslexia-font`;
 const HTML_CLASS = `${PREFIX}-dyslexia-font`;
@@ -25,7 +24,7 @@ const ICON_FONT_SELECTORS = [
 
 register({
   id: 'dyslexiaFont',
-  label: 'Fuente Dislexia',
+  label: LANG.controls.dyslexiaFont,
   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>',
   section: 'reading',
   type: 'toggle',

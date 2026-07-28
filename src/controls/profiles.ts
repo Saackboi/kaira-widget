@@ -1,10 +1,9 @@
-// -----------------------------------------------------------------------------
-// Accessibility profiles — one-click presets that activate multiple controls.
-// -----------------------------------------------------------------------------
+// One-click accessibility profiles that toggle multiple controls at once.
 
 import { pref, el, savePrefs } from '../state';
 import { register, registry } from './base';
 import { applyTextSize } from './text-size';
+import { LANG } from '../lang';
 
 interface Profile {
   id: string;
@@ -17,30 +16,30 @@ interface Profile {
 const profiles: Profile[] = [
   {
     id: 'seizure',
-    label: 'Convulsiones',
+    get label() { return LANG.profileData.seizure.label; },
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
-    description: 'Detiene animaciones y reduce saturación',
+    get description() { return LANG.profileData.seizure.description; },
     toggles: { animations: true, saturation: 'low' },
   },
   {
     id: 'lowVision',
-    label: 'Baja Visión',
+    get label() { return LANG.profileData.lowVision.label; },
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>',
-    description: 'Alto contraste + texto grande + cursor',
+    get description() { return LANG.profileData.lowVision.description; },
     toggles: { contrast: true, textSize: 2, largeCursor: true },
   },
   {
     id: 'adhd',
-    label: 'TDAH',
+    get label() { return LANG.profileData.adhd.label; },
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>',
-    description: 'Super focus + sin animaciones + títulos',
+    get description() { return LANG.profileData.adhd.description; },
     toggles: { animations: true, highlightTitles: true, highlightLinks: true },
   },
   {
     id: 'dyslexia',
-    label: 'Dislexia',
+    get label() { return LANG.profileData.dyslexia.label; },
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
-    description: 'Fuente dislexia + espaciado + guía',
+    get description() { return LANG.profileData.dyslexia.description; },
     toggles: { dyslexiaFont: true, spacing: true, readingGuide: true },
   },
 ];
@@ -55,6 +54,7 @@ function updateProfileTiles(): void {
   }
 }
 
+// Syncs all registered control tiles to match current pref state and updates profile highlights.
 function syncTiles(): void {
   for (const control of registry) {
     const ref = el.toggles[control.id];
@@ -84,6 +84,7 @@ function syncTiles(): void {
   updateProfileTiles();
 }
 
+// Disables every control and clears the active profile.
 function resetAll(): void {
   const p = pref as unknown as Record<string, unknown>;
 
@@ -109,6 +110,7 @@ function resetAll(): void {
   savePrefs();
 }
 
+// Resets all controls, then applies the selected profile's toggles.
 function applyProfile(profile: Profile): void {
   const p = pref as unknown as Record<string, unknown>;
 
@@ -144,7 +146,7 @@ function applyProfile(profile: Profile): void {
 
 register({
   id: 'profiles',
-  label: 'Perfiles',
+  label: LANG.profilesTitle,
   icon: '',
   section: 'vision',
   type: 'custom',
@@ -159,7 +161,7 @@ register({
     headerIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg>';
     headerIcon.style.cssText = 'display:flex;color:#6b7280;';
     const headerTitle = document.createElement('span');
-    headerTitle.textContent = 'Perfiles (1 clic)';
+    headerTitle.textContent = LANG.profilesSubtitle;
     headerTitle.style.cssText = 'font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;';
     header.appendChild(headerIcon);
     header.appendChild(headerTitle);
@@ -208,7 +210,7 @@ register({
 
     // Reset all button
     const resetBtn = document.createElement('button');
-    resetBtn.textContent = 'Restablecer todo';
+    resetBtn.textContent = LANG.resetAll;
     resetBtn.style.cssText = [
       'display:block;width:calc(100% - 32px);margin:0 16px 12px;',
       'padding:10px;border-radius:8px;border:1px solid #fca5a5;',

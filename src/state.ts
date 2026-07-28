@@ -1,6 +1,4 @@
-// -----------------------------------------------------------------------------
 // Shared state, preferences, element cache, and localStorage persistence.
-// -----------------------------------------------------------------------------
 
 export const PREFIX = 'kaira';
 
@@ -10,6 +8,7 @@ export const TEXT_SIZE_LEVELS = [16, 18, 20, 22];
 
 export type SaturationLevel = 'off' | 'low' | 'high';
 
+// All toggleable preferences persisted to localStorage.
 export interface Prefs {
   contrast: boolean;
   textSize: number;
@@ -26,6 +25,7 @@ export interface Prefs {
   superFocus: boolean;
   hideImages: boolean;
   activeProfile: string;
+  lang: string;
 }
 
 export interface ToggleRefs {
@@ -34,6 +34,7 @@ export interface ToggleRefs {
   dot: HTMLElement;
 }
 
+// Cache of DOM element references so controls don't query the DOM repeatedly.
 export interface ElementCache {
   container: HTMLDivElement | null;
   btn: HTMLButtonElement | null;
@@ -48,6 +49,7 @@ export interface ElementCache {
   blurHandler: ((e: FocusEvent) => void) | null;
 }
 
+// Runtime state (modifiable). Initialized with defaults, overridden by loadPrefs().
 export const pref: Prefs = {
   contrast: false,
   textSize: 0,
@@ -64,8 +66,10 @@ export const pref: Prefs = {
   superFocus: false,
   hideImages: false,
   activeProfile: '',
+  lang: '',
 };
 
+// Populated at runtime after DOM elements are created.
 export const el: ElementCache = {
   container: null,
   btn: null,
@@ -114,6 +118,7 @@ export function loadPrefs(): void {
     if (typeof parsed.superFocus === 'boolean') pref.superFocus = parsed.superFocus;
     if (typeof parsed.hideImages === 'boolean') pref.hideImages = parsed.hideImages;
     if (typeof parsed.activeProfile === 'string') pref.activeProfile = parsed.activeProfile;
+    if (typeof parsed.lang === 'string') pref.lang = parsed.lang;
   } catch {
     // Malformed data — fall back to defaults
   }
