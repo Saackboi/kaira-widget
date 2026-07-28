@@ -59,7 +59,7 @@ export function buildButton(): HTMLButtonElement {
   return b;
 }
 
-export function buildPanel(currentLang: string, onLangChange: (code: string) => void): HTMLDivElement {
+export function buildPanel(currentLang: string, onLangChange: (code: string) => void, logoUrl?: string): HTMLDivElement {
   const p = document.createElement('div');
   p.id = `${PREFIX}-panel`;
   p.setAttribute('role', 'dialog');
@@ -69,7 +69,9 @@ export function buildPanel(currentLang: string, onLangChange: (code: string) => 
   const hdr = document.createElement('div');
   hdr.className = 'kw-hdr';
 
-  const logo = new DOMParser().parseFromString(logoMarkup, 'image/svg+xml').documentElement as unknown as SVGElement;
+  const logo = logoUrl
+    ? (() => { const img = document.createElement('img'); img.className = 'kw-logo'; img.src = logoUrl; img.alt = 'Logo'; return img; })()
+    : new DOMParser().parseFromString(logoMarkup, 'image/svg+xml').documentElement as unknown as SVGElement;
 
   const tw = document.createElement('div');
   tw.className = 'kw-hdr-wrap';
