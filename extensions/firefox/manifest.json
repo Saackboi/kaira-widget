@@ -4,7 +4,9 @@
   "version": "1.0",
   "description": "Floating accessibility toolbar — adjust contrast, font size, spacing, and more on any website",
   "icons": {
-    "48": "icon.png"
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
   },
   "content_scripts": [{
     "matches": ["<all_urls>"],

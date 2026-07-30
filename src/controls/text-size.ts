@@ -5,10 +5,20 @@ import { register } from './base';
 import { LANG } from '../lang';
 import { textSizeHTML } from '../ui/templates';
 
+let _originalFontSize: string | null = null;
+
 export function applyTextSize(level: number): void {
   if (level === 0) {
-    document.documentElement.style.removeProperty('font-size');
+    if (_originalFontSize !== null) {
+      // Restore the page's original font-size instead of just removing it.
+      document.documentElement.style.fontSize = _originalFontSize;
+      _originalFontSize = null;
+    }
   } else {
+    // Save original before overriding.
+    if (_originalFontSize === null) {
+      _originalFontSize = document.documentElement.style.fontSize || '';
+    }
     document.documentElement.style.fontSize = `${TEXT_SIZE_LEVELS[level] ?? 16}px`;
   }
 }

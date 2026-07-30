@@ -7,7 +7,7 @@ A lightweight, embeddable accessibility widget that adds a floating toolbar to a
 Add the built script to your HTML and a floating button appears at the bottom-right corner:
 
 ```html
-<script src="https://cdn.kaira.io/kaira.js" data-site-key="YOUR_SITE_KEY"></script>
+<script src="kaira.js" data-site-key="YOUR_SITE_KEY"></script>
 ```
 
 No CSS imports or additional setup required — the widget injects everything it needs.

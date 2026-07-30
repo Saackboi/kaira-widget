@@ -36,6 +36,7 @@ export interface ElementCache {
   panelBody: HTMLDivElement | null;
   panelTitle: HTMLSpanElement | null;
   closeBtn: HTMLButtonElement | null;
+  backdrop: HTMLDivElement | null;
   guide: HTMLDivElement | null;
   textSizeDisplay: HTMLSpanElement | null;
   guideHandler: ((e: MouseEvent) => void) | null;
@@ -72,6 +73,7 @@ export const el: ElementCache = {
   panelBody: null,
   panelTitle: null,
   closeBtn: null,
+  backdrop: null,
   guide: null,
   textSizeDisplay: null,
   guideHandler: null,

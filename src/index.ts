@@ -116,7 +116,14 @@ import './controls/profiles';
     const initialLang = pref.lang || (navigator.language.startsWith('es') ? 'es' : 'en');
     if (initialLang !== 'en') setLang(initialLang);
 
-    // Shadow DOM isolates widget from host site CSS (e.g. Reddit aggressive resets).
+    // Backdrop overlay — dims the page behind the widget when panel is open.
+    const backdrop = document.createElement('div');
+    backdrop.id = 'kaira-backdrop';
+    backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.22);z-index:999998;opacity:0;pointer-events:none;transition:opacity 0.3s ease;';
+    backdrop.addEventListener('click', handleOutsideClick);
+    el.backdrop = backdrop;
+    document.body.appendChild(backdrop);
+
     const host = document.createElement('div');
     host.id = 'kaira-host';
     document.body.appendChild(host);
@@ -141,7 +148,7 @@ import './controls/profiles';
       const key = control.id as keyof typeof pref;
       const val = pref[key];
       if (control.id === 'textSize') {
-        if (typeof val === 'number') applyTextSize(val);
+        if (typeof val === 'number' && val > 0) applyTextSize(val);
       } else if (val === true || val === 'low' || val === 'high' || (typeof val === 'number' && val > 0)) {
         control.apply(val as boolean & string);
       }

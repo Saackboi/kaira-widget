@@ -12,12 +12,14 @@ export function openPanel(): void {
   el.panel!.classList.add(`${PREFIX}-panel--open`);
   el.btn!.setAttribute('aria-expanded', 'true');
   el.btn!.classList.add('is-hidden');
+  if (el.backdrop) { el.backdrop.style.opacity = '1'; el.backdrop.style.pointerEvents = 'auto'; }
 }
 
 export function closePanel(): void {
   el.panel!.classList.remove(`${PREFIX}-panel--open`);
   el.btn!.setAttribute('aria-expanded', 'false');
   el.btn!.classList.remove('is-hidden');
+  if (el.backdrop) { el.backdrop.style.opacity = '0'; el.backdrop.style.pointerEvents = 'none'; }
 }
 
 export function togglePanel(): void {

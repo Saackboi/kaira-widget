@@ -86,8 +86,8 @@
   position: absolute;
   bottom: 0;
   right: 4px;
-  width: clamp(320px, 35vw, 480px);
-  max-height: min(80vh, 600px);
+  width: clamp(300px, 94vw, 480px);
+  max-height: min(85vh, 600px);
   background: rgba(255, 255, 255, 0.96);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   backdrop-filter: blur(16px) saturate(180%);
@@ -385,7 +385,49 @@
   box-shadow: 0 2px 6px rgba(220, 38, 38, 0.1);
 }
 
-/* ── Text size row ── */
+/* ── Mobile / narrow screens ── */
+@media (max-width: 768px) {
+  #kaira-panel {
+    position: fixed;
+    right: auto;
+    bottom: 80px;
+    left: 50%;
+    transform: scale(0.94) translateX(-50%);
+    transform-origin: bottom center;
+  }
+
+  #kaira-panel.kaira-panel--open {
+    transform: scale(1) translateX(-50%);
+  }
+}
+
+@media (max-width: 420px) {
+  .kw-section-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 4px 12px;
+  }
+
+  .kw-section-hdr {
+    padding: 10px 12px 6px;
+  }
+
+  .kw-hdr {
+    padding: 12px 14px;
+  }
+
+  .kw-prof-grid {
+    padding: 4px 12px 12px;
+  }
+
+  .kw-prof-hdr {
+    padding: 12px 12px 8px;
+  }
+
+  .kw-tsize {
+    padding: 10px 12px;
+  }
+}
 .kw-tsize {
   display: flex;
   align-items: center;
@@ -413,6 +455,8 @@
 }
 
 .kw-tsize-ctl { display: flex; align-items: center; gap: 6px; }
+
+/* ── Text size row ── */
 
 .kw-tsize-btn {
   width: 30px;

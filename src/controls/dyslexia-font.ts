@@ -1,4 +1,8 @@
 // Loads and applies OpenDyslexic font, excluding icon/symbol font families.
+//
+// Font files are referenced from the same directory as this script.
+// To host them yourself, place the .woff2 files next to kaira.js and
+// uncomment the src lines below.
 
 import { PREFIX } from '../state';
 import { register } from './base';
@@ -46,13 +50,14 @@ register({
         style.textContent = [
           `@font-face {`,
           `  font-family: 'OpenDyslexic';`,
-          `  src: url('https://cdn.kaira.io/fonts/OpenDyslexic-Regular.woff2') format('woff2');`,
+          // Place your OpenDyslexic font files next to kaira.js:
+          `  src: url('OpenDyslexic-Regular.woff2') format('woff2');`,
           `  font-weight: normal;`,
           `  font-style: normal;`,
           `}`,
           `@font-face {`,
           `  font-family: 'OpenDyslexic';`,
-          `  src: url('https://cdn.kaira.io/fonts/OpenDyslexic-Bold.woff2') format('woff2');`,
+          `  src: url('OpenDyslexic-Bold.woff2') format('woff2');`,
           `  font-weight: bold;`,
           `  font-style: normal;`,
           `}`,

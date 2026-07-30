@@ -6,6 +6,8 @@ const src = path.resolve(__dirname, '..', 'dist', 'kaira.js');
 const extDir = path.resolve(__dirname, '..', 'extensions');
 const svgIcon = path.resolve(__dirname, '..', 'src', 'assets', 'kaira-k-light.svg');
 
+const SIZES = [16, 48, 128];
+
 for (const name of fs.readdirSync(extDir)) {
   const dir = path.join(extDir, name);
   if (!fs.statSync(dir).isDirectory()) continue;
@@ -15,8 +17,10 @@ for (const name of fs.readdirSync(extDir)) {
   fs.copyFileSync(src, dest);
   console.log(`  ✓ ${name}/kaira.js`);
 
-  // Generate 48x48 icon from SVG
-  const iconDest = path.join(dir, 'icon.png');
-  sharp(svgIcon).resize(48, 48).png().toFile(iconDest);
-  console.log(`  ✓ ${name}/icon.png`);
+  // Generate multi-size icons from SVG
+  for (const size of SIZES) {
+    const iconDest = path.join(dir, `icon-${size}.png`);
+    sharp(svgIcon).resize(size, size).png().toFile(iconDest);
+  }
+  console.log(`  ✓ ${name}/icon-*.png`);
 }
